@@ -1,7 +1,6 @@
 import { Card, Col } from "react-bootstrap";
 import "./Inventory.css";
 const Inventory = ({ inventory }) => {
-  console.log(inventory);
   const { name, image, price, quantity, supplier_name, description } =
     inventory;
   return (
