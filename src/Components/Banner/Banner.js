@@ -8,14 +8,14 @@ const Banner = () => {
     setIndex(selectedIndex);
   };
   return (
-    <div>
+    <div className="my-5 py-5">
       <Container>
         <Carousel activeIndex={index} onSelect={handleSelect}>
           <Carousel.Item>
             <div>
               <Row  xs={1} md={2} className="g-4 align-items-center">
                 <Col>
-                  <h1>Fave Sofa -Violet</h1>
+                  <h1 className="banner-title">Fave Sofa -Violet</h1>
                   <p>
                     The Fava sofa offers up a perfect look and feel when you
                     need a place to unwind. Soft to the touch yet durable enough
@@ -37,7 +37,7 @@ const Banner = () => {
             <div className="d-flex justify-content-between align-items-center">
               <Row  xs={1} md={2} className="g-4 align-items-center">
                 <Col>
-                  <h1>Swivel round sofa -Brown</h1>
+                  <h1 className="banner-title">Swivel round sofa -Brown</h1>
                   <p>
                     Swivel round sofa, complete with wheels, upholstered in
                     leather or velvet with a memory foam seat. A sofa
@@ -59,7 +59,7 @@ const Banner = () => {
             <div className="d-flex justify-content-between align-items-center">
               <Row  xs={1} md={2} className="g-4 align-items-center">
                 <Col>
-                  <h1>Round Sofa Granite Grey</h1>
+                  <h1 className="banner-title">Round Sofa Granite -Grey</h1>
                   <p>
                     Eichholtz is a Dutch brand with worldwide fame in the design
                     world and has been in existence for over twenty years. They
