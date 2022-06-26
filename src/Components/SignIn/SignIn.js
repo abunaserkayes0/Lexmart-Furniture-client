@@ -1,10 +1,11 @@
 import { useRef } from "react";
 import { Button, Form } from "react-bootstrap";
 import {
-    useSignInWithEmailAndPassword,
-    useSignInWithGoogle
+  useAuthState,
+  useSignInWithEmailAndPassword,
+  useSignInWithGoogle
 } from "react-firebase-hooks/auth";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import auth from "../../firebase.init";
 import Loading from "../Loading/Loading";
 const SignIn = () => {
@@ -12,25 +13,34 @@ const SignIn = () => {
   const passwordRef = useRef("");
   const [signInWithGoogle, userGoogle, loadingGoogle, errorGoogle] =
     useSignInWithGoogle(auth);
-  const [signInWithEmailAndPassword, user, loading, error] =
+  const [signInWithEmailAndPassword, signUser, signLoading, signError] =
     useSignInWithEmailAndPassword(auth);
+  const [user, loading, error] = useAuthState(auth);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  let from = location.state?.from?.pathname || "/";
+
   let errorFind;
-  if (errorGoogle || error) {
-    errorFind = <p className="text-danger">{error?.message}</p>;
+  if (errorGoogle || signError || error) {
+    errorFind = <p className="text-danger">{signError?.message}</p>;
   }
-  if (loading || loadingGoogle) {
+
+  if (signLoading || loadingGoogle || loading) {
     return <Loading></Loading>;
   }
-  if (user || userGoogle) {
-    navigate('/')
+
+  if (signUser || userGoogle || user) {
+    navigate(from, { replace: true });
   }
+
   const handelFromSubmit = (e) => {
     e.preventDefault();
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
     signInWithEmailAndPassword(email, password);
   };
+
   return (
     <div className="w-50 mx-auto">
       <h2 className="py-4 fw-bold">Please LogIn</h2>
