@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { Button, Form } from "react-bootstrap";
 import {
   useAuthState,
@@ -20,7 +20,11 @@ const SignIn = () => {
   const location = useLocation();
 
   let from = location.state?.from?.pathname || "/";
-
+  useEffect(() => {
+    if (signUser || userGoogle || user) {
+      navigate(from, { replace: true });
+    }
+  }, [from, navigate, signUser, user, userGoogle]);
   let errorFind;
   if (errorGoogle || signError || error) {
     errorFind = <p className="text-danger">{signError?.message}</p>;
@@ -28,10 +32,6 @@ const SignIn = () => {
 
   if (signLoading || loadingGoogle || loading) {
     return <Loading></Loading>;
-  }
-
-  if (signUser || userGoogle || user) {
-    navigate(from, { replace: true });
   }
 
   const handelFromSubmit = (e) => {

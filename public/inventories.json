@@ -5,7 +5,7 @@
     "image": "https://i.ibb.co/XWYwSZn/Dinning-of-table.jpg",
     "price": "2394",
     "description": "The Dining Table Top is made of durable tempered glass that lasts longer and better withstands wear and tear.It is designed is so much easy and beautiful.It's price is usually every users",
-    "quantity": 1
+    "quantity": 10
   },
   {
     "name": "Dressing Table",
@@ -13,7 +13,7 @@
     "image": "https://i.ibb.co/P6g5ThR/Dressing-of-table.jpg",
     "price": "6768",
     "description": "For someone with a lot of appliances – whether that means make-up, jewelry, ties or Cosmetics finding the perfect place to store, display, and classify your items can be catchy.Customer feedback most effective so you can buy any reason",
-    "quantity": 1
+    "quantity": 5
   },
   {
     "name": "Chest Drawer",
@@ -21,7 +21,7 @@
     "image": "https://i.ibb.co/4STT3pT/Chest-of-Drawer.jpg",
     "price": "7368",
     "description": "The product is made of the finest quality Laminated board.Best quality melamine paper is used to make furniture scratch-free and glossy Melamine paper is pasted by heat pressed machine which enhances the durability of the board as well as furniture",
-    "quantity": 1
+    "quantity": 3
   },
   {
     "name": "Home Decorators",
@@ -29,7 +29,7 @@
     "image": "https://i.ibb.co/r44Sr6R/Home-Decorators.jpg",
     "price": "6878",
     "description": "Made with Mehegony and engineering wood. 1-year warranty service available. Regal is not liable to set the product on the wall. We will only provide the necessary screws and other accessories.It is so simple and easy design ",
-    "quantity": 1
+    "quantity": 9
   },
   {
     "name": "Office Table",
@@ -37,7 +37,7 @@
     "image": "https://i.ibb.co/1ZFp4c7/Office-of-Table.jpg",
     "price": "9194",
     "description": "The product is made of the finest quality Laminated board. Best quality melamine paper is used to make furniture scratch-free and glossy.Melamine paper is pasted by heat pressed machine which enhances the durability of the board as well as furniture",
-    "quantity": 1
+    "quantity": 3
   },
   {
     "name": "Computer Desk",
@@ -45,6 +45,6 @@
     "image": "https://i.ibb.co/BwMF5MJ/Computer-Desk.jpg",
     "price": "9556",
     "description": "The product is made of the finest quality Laminated board.Best quality melamine paper is used to make furniture scratch-free and glossy.Melamine paper is pasted by heat pressed machine which enhances the durability of the board as well as furniture.",
-    "quantity": 1
+    "quantity": 4
   }
 ]

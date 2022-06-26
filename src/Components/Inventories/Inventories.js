@@ -4,7 +4,7 @@ import Inventory from "../Inventory/Inventory";
 const Inventories = () => {
   const [inventories, setInventories] = useState([]);
   useEffect(() => {
-    fetch("inventories.json")
+    fetch("http://localhost:5000/inventories")
       .then((res) => res.json())
       .then((result) => setInventories(result));
   }, []);
@@ -13,7 +13,7 @@ const Inventories = () => {
       <Container>
         <Row sm={1} md={2} lg={3} className='g-3'>
           {inventories.map((inventory) => (
-            <Inventory inventory={inventory}></Inventory>
+            <Inventory key={inventory._id} inventory={inventory}></Inventory>
           ))}
         </Row>
       </Container>
