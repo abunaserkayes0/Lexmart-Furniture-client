@@ -5,6 +5,7 @@ import "./App.css";
 import AddItem from "./Components/AddItem/AddItem";
 import Home from "./Components/Home/Home";
 import InventoryDetails from "./Components/InventoryDetails/InventoryDetails";
+import ManageInventory from "./Components/ManageInventory/ManageInventory";
 import Navigation from "./Components/Navigation/Navigation";
 import NotFound from "./Components/NotFound/NotFound";
 import RequireAuth from "./Components/RequireAuth/RequireAuth";
@@ -31,6 +32,10 @@ function App() {
             }
           ></Route>
           <Route path="/addItem" element={<AddItem></AddItem>}></Route>
+          <Route
+            path="/manageTable"
+            element={<ManageInventory></ManageInventory>}
+          ></Route>
           <Route path="*" element={<NotFound></NotFound>}></Route>
         </Routes>
       </MyContext.Provider>

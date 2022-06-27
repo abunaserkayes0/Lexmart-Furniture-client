@@ -1,19 +1,14 @@
-import { useEffect, useState } from "react";
 import { Container, Row } from "react-bootstrap";
+import useInventories from "../../hooks/useInventories";
 import Inventory from "../Inventory/Inventory";
 const Inventories = ({ callback }) => {
-  const [inventories, setInventories] = useState([]);
-  useEffect(() => {
-    fetch("http://localhost:5000/inventories")
-      .then((res) => res.json())
-      .then((result) => setInventories(result));
-  }, [callback]);
-  console.log("we have check = ", callback);
+  const [inventories, setInventories] = useInventories();
+  const topInventories = inventories.slice(0, 6);
   return (
     <div>
       <Container>
         <Row sm={1} md={2} lg={3} className="g-3">
-          {inventories.map((inventory) => (
+          {topInventories.map((inventory) => (
             <Inventory key={inventory._id} inventory={inventory}></Inventory>
           ))}
         </Row>
