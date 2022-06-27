@@ -1,10 +1,16 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { MyContext } from "../../App";
 import "./InventoryDetails.css";
 const InventoryDetails = () => {
+  const [callback, setCallback] = useContext(MyContext);
+
+  const[reload,setReload]=useState(false);
+
   const { id } = useParams();
   const [details, setDetails] = useState({});
-  const { name, image, price, description, supplier_name, quantity } = details;
+  const { _id, name, image, price, description, supplier_name, quantity } =
+    details;
   useEffect(() => {
     fetch(`http://localhost:5000/inventory/${id}`)
       .then((res) => res.json())
@@ -12,7 +18,23 @@ const InventoryDetails = () => {
         setDetails(result);
       });
   }, [id]);
-
+  const handelQuantity = (id) => {
+    fetch(`http://localhost:5000/inventory/count`,{
+      method:'POST',
+      headers:{
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(id)
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        if(result){
+          setReload(!reload) 
+         /* const random= Math.floor(1000 + Math.random() * 9000)
+          setCallback(random) */
+        }
+      });
+  };
   return (
     <div className="d-flex align-items-center justify-content-center my-5">
       <div className="card mb-3" style={{ maxWidth: "750px" }}>
@@ -24,8 +46,13 @@ const InventoryDetails = () => {
             <div className="card-body">
               <h5 className="card-title">{name}</h5>
               <h3>${price}</h3>
-              <strong>Quantity :</strong>
-              <button className="btn btn-primary mx-2">Delivery</button>
+              <strong>Quantity :{quantity}</strong>
+              <button
+                onClick={() => handelQuantity(_id)}
+                className="btn btn-primary mx-2"
+              >
+                Delivery
+              </button>
               <p className="card-text">{description}</p>
               <p className="card-text">
                 <small className="text-muted">{supplier_name}</small>
