@@ -1,34 +1,52 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import "./InventoryDetails.css";
 const InventoryDetails = () => {
-  const [reload, setReload] = useState(false);
-
   const { id } = useParams();
   const [details, setDetails] = useState({});
-  const { _id, name, image, price, description, supplier_name, quantity } =
-    details;
+  const { name, image, price, description, supplier_name, quantity } = details;
+  const [reload, setReload] = useState(false);
+  const increaseQuantityRef = useRef(0);
   useEffect(() => {
     fetch(`http://localhost:5000/inventory/${id}`)
       .then((res) => res.json())
       .then((result) => {
         setDetails(result);
       });
-  }, [id]);
-  const handelQuantity = (id) => {
-    fetch(`http://localhost:5000/inventory/count`, {
-      method: "POST",
+  }, [id, reload]);
+
+  const handelDecreaseQuantity = () => {
+    const finalQuantity = parseFloat(quantity) - 1;
+    fetch(`http://localhost:5000/inventory/${id}`, {
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(id),
+      body: JSON.stringify({ finalQuantity }),
     })
       .then((res) => res.json())
       .then((result) => {
         if (result) {
           setReload(!reload);
-          /* const random= Math.floor(1000 + Math.random() * 9000)
-          setCallback(random) */
+        }
+      });
+  };
+  const handelIncreaseQuantity = () => {
+    const inputFieldQuantity = increaseQuantityRef.current.value;
+    const finalQuantity = parseFloat(inputFieldQuantity) + parseFloat(quantity);
+
+    fetch(`http://localhost:5000/inventory/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({finalQuantity}),
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        if (result) {
+          setReload(!reload);
+          increaseQuantityRef.current.value = "";
         }
       });
   };
@@ -46,14 +64,24 @@ const InventoryDetails = () => {
                 <h3>${price}</h3>
                 <strong>Quantity :{quantity}</strong>
                 <button
-                  onClick={() => handelQuantity(_id)}
+                  onClick={handelDecreaseQuantity}
                   className="btn btn-primary mx-2"
                 >
                   Delivery
                 </button>
                 <p className="card-text">{description}</p>
+
                 <p className="card-text">
-                  <small className="text-muted">{supplier_name}</small>
+                  <input type="text" ref={increaseQuantityRef} />
+                  <button
+                    onClick={handelIncreaseQuantity}
+                    className="btn btn-primary "
+                  >
+                    Increase
+                  </button>
+                </p>
+                <p className="card-text">
+                  <small className="text-danger">{supplier_name}</small>
                 </p>
               </div>
             </div>

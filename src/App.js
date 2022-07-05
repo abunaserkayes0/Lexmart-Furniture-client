@@ -1,5 +1,5 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import { createContext, useState } from "react";
+import { createContext } from "react";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import AddItem from "./Components/AddItem/AddItem";
@@ -14,10 +14,8 @@ import SignIn from "./Components/SignIn/SignIn";
 export const MyContext = createContext(0);
 
 function App() {
-  const [callback, setCallback] = useState();
   return (
     <div>
-      <MyContext.Provider value={[callback, setCallback]}>
         <Navigation></Navigation>
         <Routes>
           <Route path="/" element={<Home></Home>}></Route>
@@ -38,7 +36,6 @@ function App() {
           ></Route>
           <Route path="*" element={<NotFound></NotFound>}></Route>
         </Routes>
-      </MyContext.Provider>
     </div>
   );
 }

@@ -1,7 +1,7 @@
 import { Container, Row } from "react-bootstrap";
 import useInventories from "../../hooks/useInventories";
 import Inventory from "../Inventory/Inventory";
-const Inventories = ({ callback }) => {
+const Inventories = () => {
   const [inventories, setInventories] = useInventories();
   const topInventories = inventories.slice(0, 6);
   return (
