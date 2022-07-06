@@ -6,6 +6,7 @@ const InventoryDetails = () => {
   const [details, setDetails] = useState({});
   const { name, image, price, description, supplier_name, quantity } = details;
   const [reload, setReload] = useState(false);
+  const [error, setError] = useState("");
   const increaseQuantityRef = useRef(0);
   useEffect(() => {
     fetch(`http://localhost:5000/inventory/${id}`)
@@ -33,22 +34,29 @@ const InventoryDetails = () => {
   };
   const handelIncreaseQuantity = () => {
     const inputFieldQuantity = increaseQuantityRef.current.value;
-    const finalQuantity = parseFloat(inputFieldQuantity) + parseFloat(quantity);
+    if (inputFieldQuantity === "") {
+      setError("Please Field input ?");
+      return;
+    } else {
+      const finalQuantity =
+        parseFloat(inputFieldQuantity) + parseFloat(quantity);
 
-    fetch(`http://localhost:5000/inventory/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({finalQuantity}),
-    })
-      .then((res) => res.json())
-      .then((result) => {
-        if (result) {
-          setReload(!reload);
-          increaseQuantityRef.current.value = "";
-        }
-      });
+      fetch(`http://localhost:5000/inventory/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ finalQuantity }),
+      })
+        .then((res) => res.json())
+        .then((result) => {
+          if (result) {
+            setError("");
+            setReload(!reload);
+            increaseQuantityRef.current.value = "";
+          }
+        });
+    }
   };
   return (
     <>
@@ -72,7 +80,8 @@ const InventoryDetails = () => {
                 <p className="card-text">{description}</p>
 
                 <p className="card-text">
-                  <input type="text" ref={increaseQuantityRef} />
+                  <input type="text" ref={increaseQuantityRef} required />
+                  <p className="text-danger">{error}</p>
                   <button
                     onClick={handelIncreaseQuantity}
                     className="btn btn-primary "
@@ -88,7 +97,7 @@ const InventoryDetails = () => {
           </div>
         </div>
       </div>
-      <Link to="/manageTable">
+      <Link to="/manageInventories">
         <button className="btn btn-primary d-block mx-auto">
           Manage Inventory
         </button>

@@ -37,13 +37,12 @@ const Resister = () => {
   }
   const handelFromSubmit = async (e) => {
     e.preventDefault();
-    const name = nameRef.current.value;
+    const displayName = nameRef.current.value;
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
-    await updateProfile({ displayName: name });
-
     if (password.length >= 8) {
       await createUserWithEmailAndPassword(email, password);
+      await updateProfile({ displayName: displayName });
       setBug("");
     } else {
       setBug("Password Greater than 8 characters");

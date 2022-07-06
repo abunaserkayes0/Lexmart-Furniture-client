@@ -1,15 +1,44 @@
+import { useAuthState } from "react-firebase-hooks/auth";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import auth from "../../firebase.init";
 import "./AddItems.css";
 const AddItem = () => {
   const { register, handleSubmit } = useForm();
-  const onSubmit = (data) => {
-    console.log(data);
+  const [user] = useAuthState(auth);
+  const navigate = useNavigate();
+  const onSubmit = (data, e) => {
+    const { description, image, name, price, quantity, supplier_name } = data;
     fetch(`http://localhost:5000/inventory/add`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        if (result.insertedId) {
+          alert("Data added successfully");
+          navigate("/");
+        }
+      });
+    const myItem = {
+      name: name,
+      image: image,
+      price: price,
+      quantity: quantity,
+      description: description,
+      supplier_name: supplier_name,
+      email: e.target.email.value,
+      displayName: e.target.displayName.value,
+    };
+    fetch(`http://localhost:5000/myItems`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ myItem }),
     })
       .then((res) => res.json())
       .then((result) => console.log(result));
@@ -23,7 +52,7 @@ const AddItem = () => {
       >
         <input
           {...register("image", { required: true })}
-          placeholder="Enter Your Image"
+          placeholder="Enter Your Image link"
         />
         <input
           {...register("name", { required: true })}
@@ -33,6 +62,8 @@ const AddItem = () => {
           {...register("description", { required: true })}
           placeholder="Enter Your description"
         />
+        <input name="email" value={user?.email} readOnly />
+        <input name="displayName" value={user?.displayName} readOnly />
         <input
           {...register("supplier_name", { required: true })}
           placeholder="Enter Your provider-name"
@@ -47,7 +78,11 @@ const AddItem = () => {
           {...register("quantity", { required: true })}
           placeholder="Enter Your quantity"
         />
-        <input type="submit" />
+        <input
+          className="btn btn-primary"
+          type="submit"
+          value="Add Inventory"
+        />
       </form>
     </div>
   );

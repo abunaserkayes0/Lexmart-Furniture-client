@@ -20,7 +20,7 @@ const Navigation = () => {
             <Nav className="ms-auto">
               {user && (
                 <>
-                  <Nav.Link as={Link} to="/manageTable">
+                  <Nav.Link as={Link} to="/manageInventories">
                     Manage Item
                   </Nav.Link>
                   <Nav.Link as={Link} to="/addItem">
