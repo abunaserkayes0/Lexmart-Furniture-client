@@ -1,6 +1,8 @@
 import { Card, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import useInventories from "../../hooks/useInventories";
 const ManageTable = ({ inventory }) => {
+  const navigate = useNavigate();
   const [inventories, setInventories] = useInventories([]);
   const { _id, name, price, image, description, supplier_name, quantity } =
     inventory;
@@ -31,12 +33,20 @@ const ManageTable = ({ inventory }) => {
             <p className="text-danger">Provider:{supplier_name}</p>
             <p>Quantity:{quantity}</p>
           </Card.Body>
-          <button
-            onClick={() => handelDelete(_id)}
-            className="btn w-25 mx-auto p-3"
-          >
-            <i className="fa-solid fa-trash-can"></i>
-          </button>
+          <div className="d-flex">
+            <button
+              onClick={() => navigate(`/inventory/${_id}`)}
+              className="btn btn-primary w-25 mx-auto my-2"
+            >
+              Update
+            </button>
+            <button
+              onClick={() => handelDelete(_id)}
+              className="btn w-25 mx-auto p-3"
+            >
+              <i className="fa-solid fa-trash-can"></i>
+            </button>
+          </div>
         </Card>
       </Col>
     </>

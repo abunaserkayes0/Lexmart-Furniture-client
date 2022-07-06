@@ -6,5 +6,5 @@ article > img {
 }
 article:hover {
   background-color: lightblue;
-  transition: 0.45s ease-in;
+  transition: 0.45s ease-in-out;
 }
