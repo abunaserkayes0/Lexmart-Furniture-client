@@ -8,7 +8,7 @@ const Navigation = () => {
   const [user] = useAuthState(auth);
   return (
     <div>
-      <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+      <Navbar fixed="top" collapseOnSelect expand="lg" bg="dark" variant="dark">
         <Container>
           <Navbar.Brand as={Link} to="/">
             <span className="fw-bold">
@@ -17,7 +17,7 @@ const Navigation = () => {
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
-            <Nav className="ms-auto">
+            <Nav className="ms-auto align-items-center">
               {user && (
                 <>
                   <Nav.Link as={Link} to="/manageInventories">
@@ -31,10 +31,12 @@ const Navigation = () => {
                   </Nav.Link>
                 </>
               )}
-
+              <Nav.Link as={Link} to="/blogs">
+                Blogs
+              </Nav.Link>
               {user ? (
                 <button
-                  className="bg-black text-white"
+                  className="bg-black text-white border-0 my-2"
                   onClick={() => signOut(auth)}
                 >
                   SignOut
@@ -44,9 +46,6 @@ const Navigation = () => {
                   SignIn
                 </Nav.Link>
               )}
-              <Nav.Link as={Link} to="/blogs">
-                Blogs
-              </Nav.Link>
             </Nav>
           </Navbar.Collapse>
         </Container>

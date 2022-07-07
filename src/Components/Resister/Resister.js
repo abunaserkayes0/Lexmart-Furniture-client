@@ -1,11 +1,12 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import {
   useCreateUserWithEmailAndPassword,
+  useSendEmailVerification,
   useSignInWithGoogle,
   useUpdateProfile
 } from "react-firebase-hooks/auth";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import auth from "../../firebase.init";
 import Loading from "../Loading/Loading";
 const Resister = () => {
@@ -14,6 +15,8 @@ const Resister = () => {
   const passwordRef = useRef("");
   const [bug, setBug] = useState("");
   const [signInWithGoogle, user, loading, error] = useSignInWithGoogle(auth);
+  const [sendEmailVerification, sending, verifyError] =
+    useSendEmailVerification(auth);
   const [
     createUserWithEmailAndPassword,
     createUser,
@@ -22,16 +25,29 @@ const Resister = () => {
   ] = useCreateUserWithEmailAndPassword(auth, { sendEmailVerification: true });
   const [updateProfile, updating, updateError] = useUpdateProfile(auth);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  let from = location.state?.from?.pathname || "/";
+  useEffect(() => {
+    if (user || createUser) {
+      navigate(from, { replace: true });
+    }
+  }, [user, createUser, from, navigate]);
   let errorFind;
-  if (error || createUserError || updateError) {
-    errorFind = <p>{error?.message}</p>;
+  if (error || createUserError || updateError || verifyError) {
+    errorFind = (
+      <p className="text-danger">
+        {createUserError?.message ||
+          updateError?.message ||
+          error?.message ||
+          verifyError?.message}
+      </p>
+    );
   }
-  if (loading || createUserLoading) {
+  if (loading || createUserLoading || sending) {
     return <Loading></Loading>;
   }
-  if (user || createUser) {
-    navigate("/");
-  }
+
   if (updating) {
     return <Loading></Loading>;
   }
@@ -41,6 +57,7 @@ const Resister = () => {
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
     if (password.length >= 8) {
+      await sendEmailVerification();
       await createUserWithEmailAndPassword(email, password);
       await updateProfile({ displayName: displayName });
       setBug("");

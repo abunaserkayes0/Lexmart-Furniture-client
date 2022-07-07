@@ -2,20 +2,26 @@ import { useEffect, useRef } from "react";
 import { Button, Form } from "react-bootstrap";
 import {
   useAuthState,
+  useSendPasswordResetEmail,
   useSignInWithEmailAndPassword,
   useSignInWithGoogle
 } from "react-firebase-hooks/auth";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import auth from "../../firebase.init";
 import Loading from "../Loading/Loading";
+
 const SignIn = () => {
   const emailRef = useRef("");
   const passwordRef = useRef("");
+  const [user, loading, error] = useAuthState(auth);
   const [signInWithGoogle, userGoogle, loadingGoogle, errorGoogle] =
     useSignInWithGoogle(auth);
   const [signInWithEmailAndPassword, signUser, signLoading, signError] =
     useSignInWithEmailAndPassword(auth);
-  const [user, loading, error] = useAuthState(auth);
+  const [sendPasswordResetEmail, sending, restError] =
+    useSendPasswordResetEmail(auth);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -26,11 +32,15 @@ const SignIn = () => {
     }
   }, [from, navigate, signUser, user, userGoogle]);
   let errorFind;
-  if (errorGoogle || signError || error) {
-    errorFind = <p className="text-danger">{signError?.message}</p>;
+  if (errorGoogle || signError || error || restError) {
+    errorFind = (
+      <p className="text-danger">
+        {signError?.message || errorGoogle?.message || error?.message}
+      </p>
+    );
   }
 
-  if (signLoading || loadingGoogle || loading) {
+  if (signLoading || loadingGoogle || loading || sending) {
     return <Loading></Loading>;
   }
 
@@ -41,6 +51,16 @@ const SignIn = () => {
     signInWithEmailAndPassword(email, password);
   };
 
+  const handelResetEmail = async () => {
+    const email = emailRef.current.value;
+    if (email) {
+      await sendPasswordResetEmail(email);
+      toast("sent mail check you spam folder!");
+    } else {
+      alert("please enter your email!!!");
+      return;
+    }
+  };
   return (
     <div className="w-50 mx-auto">
       <h2 className="py-4 fw-bold">Please LogIn</h2>
@@ -82,8 +102,12 @@ const SignIn = () => {
         </button>
       </div>
       <p>
-        Don't Have an account?<Link to="/resister">Create an account</Link>
+        Don't Have an account? <Link to="/resister">Create an account</Link>
       </p>
+      <p onClick={handelResetEmail} role="button">
+        Forgotten Email?
+      </p>
+      <ToastContainer />
     </div>
   );
 };
