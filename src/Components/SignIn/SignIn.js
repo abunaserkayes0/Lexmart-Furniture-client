@@ -49,6 +49,17 @@ const SignIn = () => {
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
     signInWithEmailAndPassword(email, password);
+    fetch("http://localhost:5000/signIn", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email }),
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        localStorage.setItem("token", result.token);
+      });
   };
 
   const handelResetEmail = async () => {

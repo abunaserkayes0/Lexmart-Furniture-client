@@ -7,7 +7,7 @@ import "./Navigation.css";
 const Navigation = () => {
   const [user] = useAuthState(auth);
   return (
-    <div>
+    <div className="mb-5 pb-5">
       <Navbar fixed="top" collapseOnSelect expand="lg" bg="dark" variant="dark">
         <Container>
           <Navbar.Brand as={Link} to="/">
