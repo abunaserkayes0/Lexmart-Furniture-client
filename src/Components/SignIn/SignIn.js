@@ -49,7 +49,7 @@ const SignIn = () => {
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
     signInWithEmailAndPassword(email, password);
-    fetch("http://localhost:5000/signIn", {
+    fetch("https://murmuring-basin-78335.herokuapp.com/signIn", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
