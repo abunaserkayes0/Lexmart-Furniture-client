@@ -51,8 +51,10 @@ const SignIn = () => {
     signInWithEmailAndPassword(email, password);
     fetch("https://murmuring-basin-78335.herokuapp.com/signIn", {
       method: "POST",
+
       headers: {
         "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
       },
       body: JSON.stringify({ email }),
     })

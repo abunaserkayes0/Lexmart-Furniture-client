@@ -11,6 +11,7 @@ const MyItems = () => {
     fetch(`https://murmuring-basin-78335.herokuapp.com/myItems?email=${email}`, {
       headers: {
         authorization: `Bearer ${localStorage.getItem("token")}`,
+        'Access-Control-Allow-Origin': '*'
       },
     })
       .then((res) => res.json())
