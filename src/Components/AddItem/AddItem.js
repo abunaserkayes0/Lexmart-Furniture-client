@@ -9,11 +9,10 @@ const AddItem = () => {
   const navigate = useNavigate();
   const onSubmit = (data, e) => {
     const { description, image, name, price, quantity, supplier_name } = data;
-    fetch(`https://murmuring-basin-78335.herokuapp.com/inventory/add`, {
+    fetch(`http://localhost:5000/inventory/add`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        'Access-Control-Allow-Origin': '*'
       },
       body: JSON.stringify(data),
     })
@@ -34,11 +33,10 @@ const AddItem = () => {
       email: e.target.email.value,
       displayName: e.target.displayName.value,
     };
-    fetch(`https://murmuring-basin-78335.herokuapp.com/myItems`, {
+    fetch(`http://localhost:5000/myItems`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        'Access-Control-Allow-Origin': '*'
       },
       body: JSON.stringify({ myItem }),
     })

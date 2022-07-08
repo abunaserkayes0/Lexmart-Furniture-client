@@ -8,10 +8,9 @@ const MyItems = () => {
   const [user] = useAuthState(auth);
   const email = user.email;
   useEffect(() => {
-    fetch(`https://murmuring-basin-78335.herokuapp.com/myItems?email=${email}`, {
+    fetch(`http://localhost:5000/myItems?email=${email}`, {
       headers: {
         authorization: `Bearer ${localStorage.getItem("token")}`,
-        'Access-Control-Allow-Origin': '*'
       },
     })
       .then((res) => res.json())
@@ -22,7 +21,7 @@ const MyItems = () => {
       "Are you sure you want to delete this?"
     );
     if (confirmedMassage) {
-      fetch(`https://murmuring-basin-78335.herokuapp.com/myItem/${id}`, {
+      fetch(`http://localhost:5000/myItem/${id}`, {
         method: "DELETE",
       })
         .then((res) => res.json())

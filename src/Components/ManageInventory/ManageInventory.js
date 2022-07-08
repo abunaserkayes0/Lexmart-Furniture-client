@@ -9,7 +9,7 @@ const ManageTable = ({ inventory }) => {
   const handelDelete = (id) => {
     const confirmed = window.confirm("Are sure you want to delete this item?");
     if (confirmed) {
-      fetch(`https://murmuring-basin-78335.herokuapp.com/inventory/${id}`, {
+      fetch(`http://localhost:5000/inventory/${id}`, {
         method: "DELETE",
       })
         .then((res) => res.json())
