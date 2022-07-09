@@ -9,7 +9,7 @@ const InventoryDetails = () => {
   const [error, setError] = useState("");
   const increaseQuantityRef = useRef(0);
   useEffect(() => {
-    fetch(`http://localhost:5000/inventory/${id}`)
+    fetch(`https://agile-depths-74212.herokuapp.com/inventory/${id}`)
       .then((res) => res.json())
       .then((result) => {
         setDetails(result);
@@ -18,7 +18,7 @@ const InventoryDetails = () => {
 
   const handelDecreaseQuantity = () => {
     const finalQuantity = parseFloat(quantity) - 1;
-    fetch(`http://localhost:5000/inventory/${id}`, {
+    fetch(`https://agile-depths-74212.herokuapp.com/inventory/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -41,7 +41,7 @@ const InventoryDetails = () => {
       const finalQuantity =
         parseFloat(inputFieldQuantity) + parseFloat(quantity);
 
-      fetch(`http://localhost:5000/inventory/${id}`, {
+      fetch(`https://agile-depths-74212.herokuapp.com/inventory/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

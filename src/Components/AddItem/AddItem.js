@@ -9,7 +9,7 @@ const AddItem = () => {
   const navigate = useNavigate();
   const onSubmit = (data, e) => {
     const { description, image, name, price, quantity, supplier_name } = data;
-    fetch(`http://localhost:5000/inventory/add`, {
+    fetch(`https://agile-depths-74212.herokuapp.com/inventory/add`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -33,7 +33,7 @@ const AddItem = () => {
       email: e.target.email.value,
       displayName: e.target.displayName.value,
     };
-    fetch(`http://localhost:5000/myItems`, {
+    fetch(`https://agile-depths-74212.herokuapp.com/myItems`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
